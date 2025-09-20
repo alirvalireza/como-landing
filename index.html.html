@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>کومو — ابری با احتمال بارش دونه‌های قهوه</title>
+  <meta name="description" content="لندینگ کمپین پاییزی کافه COMO با تایپوگرافی لاله‌زار بولد سفید، لوگوی اصلی و موشن بارش دونه‌های قهوه." />
+  <meta name="theme-color" content="#f0c05a">
+  <style>
+    @import url('https://cdn.jsdelivr.net/gh/rastikerdar/lalezar-font@v1.0.0/dist/font-face.css');
+
+    :root{
+      --bg:#f0c05a;
+      --overlay:rgba(0,0,0,.55);
+      --ink:#ffffff;     /* متن سفید خوانا */
+      --coffee:#4b2a1f;
+      --cream:#fff;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%; margin:0;}
+    body{
+      font-family:'Lalezar', cursive;
+      display:flex; justify-content:center; align-items:center;
+      background:var(--bg);
+      overflow:hidden;
+      position:relative;
+      color:var(--ink);
+    }
+
+    .bg-img{
+      position:absolute; inset:0;
+      background:url('https://images.unsplash.com/photo-1507048331197-7d4ac70811cf?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
+      filter: blur(16px) brightness(.5) saturate(.8);
+      z-index:0;
+    }
+    .overlay{ position:absolute; inset:0; background:var(--overlay); z-index:1; }
+
+    .frame{
+      width:min(1100px,94vw);
+      background:rgba(255,255,255,.08);
+      backdrop-filter: blur(10px);
+      border-radius:16px;
+      padding:64px 40px;
+      position:relative;
+      z-index:2;
+      text-align:center;
+      box-shadow:0 28px 60px rgba(0,0,0,.45);
+    }
+
+    .logo{ width:min(260px,70vw); margin:0 auto 24px; display:block; filter:drop-shadow(0 6px 14px rgba(0,0,0,.4)); }
+
+    .big-word{
+      font-family:'Lalezar', cursive;
+      font-weight:900;
+      font-size: clamp(100px,18vw,240px);
+      color:rgba(255,255,255,.07);
+      position:absolute;
+      top:12%; left:50%; transform:translateX(-50%);
+      white-space:nowrap;
+      pointer-events:none;
+      z-index:0;
+    }
+
+    h1{
+      font-weight:900;
+      font-size: clamp(48px,8vw,84px);
+      margin:0 0 14px;
+      position:relative; z-index:2;
+      color:var(--ink);
+      text-shadow:0 3px 6px rgba(0,0,0,.4);
+    }
+    .subtitle{
+      font-weight:700;
+      font-size: clamp(26px,5vw,38px);
+      margin:0 0 28px;
+      position:relative; z-index:2;
+      color:var(--ink);
+      text-shadow:0 2px 4px rgba(0,0,0,.35);
+    }
+    .note{
+      font-weight:700;
+      font-size: clamp(20px,4vw,28px);
+      background:rgba(0,0,0,.3);
+      display:inline-block;
+      padding:10px 22px;
+      border-radius:999px;
+      box-shadow:0 6px 18px rgba(0,0,0,.25);
+      position:relative; z-index:2;
+      color:var(--cream);
+    }
+
+    /* بارش دونه‌های قهوه */
+    .beans{ position:absolute; inset:0; pointer-events:none; z-index:3; overflow:hidden }
+    .bean{ position:absolute; width:14px; height:20px; background:var(--coffee); border-radius:14px/20px; opacity:.25; }
+    .bean::after{ content:""; position:absolute; inset:0; border-left:3px solid rgba(255,255,255,.3); border-radius:14px/20px }
+    @keyframes fall{ 0%{ transform: translateY(-15vh) rotate(0deg); opacity:.9 } 100%{ transform: translateY(115vh) rotate(200deg); opacity:0.1 } }
+
+    .bean:nth-child(1){ left:10%; animation: fall 12s linear infinite; }
+    .bean:nth-child(2){ left:22%; animation: fall 15s linear infinite; animation-delay:-3s; transform:scale(.8); }
+    .bean:nth-child(3){ left:34%; animation: fall 18s linear infinite; animation-delay:-7s; transform:scale(1.2); }
+    .bean:nth-child(4){ left:48%; animation: fall 20s linear infinite; animation-delay:-5s; }
+    .bean:nth-child(5){ left:62%; animation: fall 14s linear infinite; animation-delay:-2s; transform:scale(1.1); }
+    .bean:nth-child(6){ left:74%; animation: fall 16s linear infinite; animation-delay:-8s; transform:scale(.9); }
+    .bean:nth-child(7){ left:86%; animation: fall 19s linear infinite; animation-delay:-6s; transform:scale(1.3); }
+  </style>
+</head>
+<body>
+  <div class="bg-img"></div>
+  <div class="overlay"></div>
+
+  <div class="frame">
+    <img class="logo" src="./como-logo.png" alt="لوگوی کافه کومو" />
+    <div class="big-word">کومو</div>
+
+    <h1>کومو</h1>
+    <p class="subtitle">ابری با احتمال بارش دونه های قهوه</p>
+
+    <div class="note">تو پاییز قهوه‌ت یخ نکنه!</div>
+  </div>
+
+  <!-- بارش دونه‌های قهوه -->
+  <div class="beans" aria-hidden="true">
+    <span class="bean"></span>
+    <span class="bean"></span>
+    <span class="bean"></span>
+    <span class="bean"></span>
+    <span class="bean"></span>
+    <span class="bean"></span>
+    <span class="bean"></span>
+  </div>
+
+  <audio id="bgm" src="./como-theme.mp3" preload="auto" loop playsinline></audio>
+  <script>
+    (function(){
+      const audio=document.getElementById('bgm');
+      async function boot(){
+        try{ audio.muted=true; await audio.play(); }
+        catch(e){}
+      }
+      if(document.readyState==='complete') boot(); else window.addEventListener('load',boot);
+    })();
+  </script>
+</body>
+</html>
